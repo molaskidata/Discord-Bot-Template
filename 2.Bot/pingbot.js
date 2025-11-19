@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
@@ -11,4 +12,4 @@ client.on('messageCreate', (message) => {
     }
 });
 
-client.login('MTQ0MDY1NjAzMjk5NjI2MTkxOQ.GQU8ys.8UzFuN9deU3jefdwwCcTr2waHuq2zxYrPsIyhs');
+client.login(process.env.PINGBOT_TOKEN);
