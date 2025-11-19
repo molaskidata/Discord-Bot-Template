@@ -106,6 +106,30 @@ const commandHandlers = {
             `To connect your GitHub account, click this link: ${loginUrl}\n` +
             'Authorize the app, then return to Discord!'
         );
+    },
+    // Disconnect GitHub account and remove role
+    '!discongithubacc': async (message) => {
+        const discordId = message.author.id;
+        // Remove from JSON
+        let data = {};
+        if (fs.existsSync('github_links.json')) {
+            data = JSON.parse(fs.readFileSync('github_links.json'));
+        }
+        if (data[discordId]) {
+            delete data[discordId];
+            fs.writeFileSync('github_links.json', JSON.stringify(data, null, 2));
+            // Remove role
+            try {
+                const guild = message.guild;
+                const member = await guild.members.fetch(discordId);
+                await member.roles.remove('1440681068708630621');
+                message.reply('Your GitHub account has been disconnected and the role removed.');
+            } catch (err) {
+                message.reply('Disconnected, but failed to remove the role.');
+            }
+        } else {
+            message.reply('No GitHub account linked.');
+        }
     }
 };
 
