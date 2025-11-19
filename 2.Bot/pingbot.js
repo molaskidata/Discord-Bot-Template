@@ -7,8 +7,8 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-    if (message.content === '!pingmeee') {
-        message.channel.send('!pongez');
+    if (message.content === '!pingme') {
+        message.channel.send('!ponggg');
     }
 });
 
