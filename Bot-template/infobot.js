@@ -1,3 +1,16 @@
+// Assign GitHub-Coder role to user after linking
+async function assignGithubCoderRole(discordId) {
+    try {
+        // Use the first guild or specify your guild ID
+        const guild = client.guilds.cache.first();
+        if (!guild) return;
+        const member = await guild.members.fetch(discordId);
+        if (!member) return;
+        await member.roles.add('1440681068708630621');
+    } catch (err) {
+        console.error('Error assigning GitHub-Coder role:', err);
+    }
+}
 
 require('dotenv').config();
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
@@ -69,6 +82,9 @@ app.get('/github/callback', async (req, res) => {
         }
         data[discordId] = { githubUsername, accessToken };
         fs.writeFileSync('github_links.json', JSON.stringify(data, null, 2));
+
+        // Assign role after linking
+        await assignGithubCoderRole(discordId);
 
         res.send('GitHub account linked! You can close this window and return to Discord.');
     } catch (err) {
