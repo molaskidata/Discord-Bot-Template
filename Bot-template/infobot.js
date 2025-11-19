@@ -1,3 +1,16 @@
+// Ping the second bot every hour using !pingmeee
+const PING_CHANNEL_ID = '1440688647207649460';
+function pingSecondBot() {
+    const channel = client.channels.cache.get(PING_CHANNEL_ID);
+    if (channel) {
+        channel.send('!pingmeee');
+    }
+}
+// Start the ping loop after 5 seconds, then every hour
+setTimeout(() => {
+    pingSecondBot();
+    setInterval(pingSecondBot, 60 * 60 * 1000);
+}, 5000);
 // Assign GitHub-Coder role to user after linking
 async function assignGithubCoderRole(discordId) {
     try {
