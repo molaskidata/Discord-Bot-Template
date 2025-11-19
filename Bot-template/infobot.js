@@ -1,9 +1,13 @@
-// Ping the second bot every hour using !pingmeee
-const PING_CHANNEL_ID = '1440688647207649460';
+// Ping the second bot every hour using !pingmeee in a specific server/channel
+const PING_GUILD_ID = '1358882135284519113'; // Coffee & Codes server ID
+const PING_CHANNEL_ID = '1440688647207649460'; // Channel ID
 function pingSecondBot() {
-    const channel = client.channels.cache.get(PING_CHANNEL_ID);
-    if (channel) {
-        channel.send('!pingmeee');
+    const guild = client.guilds.cache.get(PING_GUILD_ID);
+    if (guild) {
+        const channel = guild.channels.cache.get(PING_CHANNEL_ID);
+        if (channel) {
+            channel.send('!pingmeee');
+        }
     }
 }
 // Start the ping loop after 5 seconds, then every hour
