@@ -8,7 +8,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', (message) => {
     if (message.content === '!pingmeee') {
-        message.channel.send('!pingme'); // Ping the main bot
+        message.channel.send('!pongez');
     }
 });
 

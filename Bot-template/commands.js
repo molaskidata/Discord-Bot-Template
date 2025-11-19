@@ -63,6 +63,9 @@ const commandHandlers = {
     '!goodnight': (message) => message.reply(getRandomResponse(goodnightResponses)),
     '!help': (message) => message.reply('**Available Commands:**\n`!hi` - Say hello\n`!coffee` - Time for coffee!\n`!meme` - Programming memes\n `!github` - Bots Owner Github and my Repo! \n`!motivation` - Get motivated\n`!goodnight` - Good night messages\n`!ping` - Test bot\n`!info` - Bot info'),
     '!ping': (message) => message.reply('Pong! Bot is running 24/7'),
+    '!pingme': (message) => {
+        message.channel.send('!ponggg');
+    },
     '!info': (message, BOT_INFO) => message.reply(`Bot: ${BOT_INFO.name} v${BOT_INFO.version}\nStatus: Online 24/7`),
     '!commands': (message) => {
         message.reply(
