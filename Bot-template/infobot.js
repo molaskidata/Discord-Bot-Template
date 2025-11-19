@@ -1,5 +1,10 @@
+
+require('dotenv').config();
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const express = require('express');
+const querystring = require('querystring');
+const fs = require('fs');
+const axios = require('axios');
 
 const BOT_INFO = {
     name: "CoderMaster",
@@ -21,6 +26,55 @@ const MAX_HOURS = 20;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// GitHub OAuth login endpoint
+app.get('/github/login', (req, res) => {
+    const discordId = req.query.discordId;
+    const params = querystring.stringify({
+        client_id: process.env.GITHUB_CLIENT_ID,
+        redirect_uri: 'http://localhost:3000/github/callback',
+        scope: 'read:user repo',
+        state: discordId // Use Discord user ID as state
+    });
+    res.redirect(`https://github.com/login/oauth/authorize?${params}`);
+});
+
+// GitHub OAuth callback endpoint
+app.get('/github/callback', async (req, res) => {
+    const code = req.query.code;
+    const discordId = req.query.state;
+    try {
+        // Exchange code for access token
+        const tokenRes = await axios.post(
+            'https://github.com/login/oauth/access_token',
+            {
+                client_id: process.env.GITHUB_CLIENT_ID,
+                client_secret: process.env.GITHUB_CLIENT_SECRET,
+                code,
+                redirect_uri: 'http://localhost:3000/github/callback'
+            },
+            { headers: { Accept: 'application/json' } }
+        );
+        const accessToken = tokenRes.data.access_token;
+
+        // Get GitHub username
+        const userRes = await axios.get('https://api.github.com/user', {
+            headers: { Authorization: `token ${accessToken}` }
+        });
+        const githubUsername = userRes.data.login;
+
+        // Save mapping to JSON file
+        let data = {};
+        if (fs.existsSync('github_links.json')) {
+            data = JSON.parse(fs.readFileSync('github_links.json'));
+        }
+        data[discordId] = { githubUsername, accessToken };
+        fs.writeFileSync('github_links.json', JSON.stringify(data, null, 2));
+
+        res.send('GitHub account linked! You can close this window and return to Discord.');
+    } catch (err) {
+        res.status(500).send('GitHub authentication failed.');
+    }
+});
 
 // Security: Limit request body size to prevent DoS attacks
 app.use(express.json({ limit: '100kb' }));

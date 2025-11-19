@@ -51,6 +51,7 @@ const goodnightResponses = [
 ];
 
 // Command handler map
+
 const commandHandlers = {
     '!hi': (message) => message.reply(getRandomResponse(hiResponses)),
     '!github': (message) => message.reply("Check that out my friend! `https://github.com/molaskidata`"),
@@ -61,7 +62,26 @@ const commandHandlers = {
     '!goodnight': (message) => message.reply(getRandomResponse(goodnightResponses)),
     '!help': (message) => message.reply('**Available Commands:**\n`!hi` - Say hello\n`!coffee` - Time for coffee!\n`!meme` - Programming memes\n `!github` - Bots Owner Github and my Repo! \n`!motivation` - Get motivated\n`!goodnight` - Good night messages\n`!ping` - Test bot\n`!info` - Bot info'),
     '!ping': (message) => message.reply('Pong! Bot is running 24/7'),
-    '!info': (message, BOT_INFO) => message.reply(`Bot: ${BOT_INFO.name} v${BOT_INFO.version}\nStatus: Online 24/7`)
+    '!info': (message, BOT_INFO) => message.reply(`Bot: ${BOT_INFO.name} v${BOT_INFO.version}\nStatus: Online 24/7`),
+    '!commands': (message) => {
+        message.reply(
+            '**Available Commands:**\n' +
+            '`!commands` - Show this list\n' +
+            '`!congithubacc` - Connect your GitHub account\n' +
+            '`!discongithubacc` - Disconnect your GitHub account\n' +
+            '`!gitrank` - Show your GitHub commit level\n' +
+            '`!gitleader` - Show the top 10 committers\n' +
+            '`!hi`, `!coffee`, `!meme`, `!motivation`, `!goodnight`, `!ping`, `!info`, `!github`'
+        );
+    },
+    '!congithubacc': (message) => {
+        const discordId = message.author.id;
+        const loginUrl = `http://localhost:3000/github/login?discordId=${discordId}`;
+        message.reply(
+            `To connect your GitHub account, click this link: ${loginUrl}\n` +
+            'Authorize the app, then return to Discord!'
+        );
+    }
 };
 
 function handleCommand(message, BOT_INFO) {
