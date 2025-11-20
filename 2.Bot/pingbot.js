@@ -22,7 +22,7 @@ client.on('ready', () => {
     console.log('PingBot is online!');
     client.user.setPresence({
         activities: [{
-            name: 'Liest "Das große Buch der Herzschlag-Bots"',
+            name: '"Das große Buch der Herzschlag-Bots"',
             type: 1, // Streaming/Streamt
             details: 'Seite 102 von 376',
             state: 'Vorlesen'
