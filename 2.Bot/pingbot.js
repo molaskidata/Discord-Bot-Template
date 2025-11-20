@@ -25,7 +25,7 @@ client.on('ready', () => {
             name: '"Das große Buch der Herzschlag-Bots"',
             type: 1, // Streaming/Streamt
             details: 'Seite 102 von 376',
-            state: 'Vorlesen'
+            state: 'Vorlesen: auf Seite 171 von 304'
         }],
         status: 'online'
     });
