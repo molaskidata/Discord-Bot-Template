@@ -1,0 +1,6 @@
+Bot-template/
+2.Bot/
+node_modules/
+.env
+*.log
+terms&privacy/
