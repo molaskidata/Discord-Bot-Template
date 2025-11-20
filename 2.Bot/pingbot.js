@@ -20,6 +20,15 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 client.on('ready', () => {
     console.log('PingBot is online!');
+    client.user.setPresence({
+        activities: [{
+            name: 'Das große Buch der Herzschlag-Bots',
+            type: 3, // 3 = Reading (Lesen)
+            details: 'Seite 102 von 376',
+            state: 'Lesen'
+        }],
+        status: 'online'
+    });
 });
 
 client.on('messageCreate', (message) => {
