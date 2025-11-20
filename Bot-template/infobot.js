@@ -1,3 +1,19 @@
+// Channel and guild IDs for pinging
+const PING_GUILD_ID = '1358882135284519113'; // Coffee & Codes server ID
+const PING_CHANNEL_ID = '1440688647207649460'; // Channel ID
+
+// Main bot sends !pingme every hour
+function sendPingToPingBot() {
+    const guild = client.guilds.cache.get(PING_GUILD_ID);
+    if (guild) {
+        const channel = guild.channels.cache.get(PING_CHANNEL_ID);
+        if (channel) {
+            channel.send('!pingme');
+        }
+    }
+}
+
+setInterval(sendPingToPingBot, 60 * 60 * 1000); // every hour
 
 // Assign GitHub-Coder role to user after linking
 async function assignGithubCoderRole(discordId) {
