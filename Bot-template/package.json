@@ -1,5 +1,5 @@
 {
-  "name": "discord-infobot",
+  "name": "@molaskidata/discord-bot-template",
   "version": "1.0.0",
   "main": "infobot.js",
   "scripts": {
